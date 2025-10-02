@@ -1,53 +1,29 @@
 import random
 
+
+
 # ========= Utilidades =========
 def print_formateado(vector, filas=8, columnas=8):
     for i in range(filas):
         print(''.join('█' if v == 1 else ' ' for v in vector[i*columnas:(i+1)*columnas]))
     print()
 
+
+def leer_matriz(nombre_archivo):
+    matriz = []
+    with open(nombre_archivo, "r") as f:
+        for linea in f:
+            
+            fila = [int(x) for x in linea.strip().split()]
+            matriz.append(fila)
+    return matriz
+
 # ========= Patrones (num1..num5) =========
-num1 = [[-1, 1, 1, -1, -1, -1, -1, -1]]*8
-num2 = [
-    [1, 1, 1, 1, 1, 1, 1, 1],
-    [1, -1, -1, -1, -1, -1, -1, 1],
-    [-1, -1, -1, -1, -1, -1, -1, 1],
-    [-1, -1, -1, -1, -1, -1, -1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1],
-    [1, -1, -1, -1, -1, -1, -1, -1],
-    [1, -1, -1, -1, -1, -1, -1, -1],
-    [1, 1, 1, 1, 1, 1, 1, 1],
-]
-num3 = [
-    [1, 1, 1, 1, 1, 1, 1, 1],
-    [1, -1, -1, -1, -1, -1, -1, 1],
-    [-1, -1, -1, -1, -1, -1, -1, 1],
-    [-1, -1, -1, -1, -1, -1, -1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1],
-    [-1, -1, -1, -1, -1, -1, -1, 1],
-    [-1, -1, -1, -1, -1, -1, -1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1],
-]
-num4 = [
-    [1, -1, -1, 1, -1, -1, -1, -1],
-    [1, -1, -1, 1, -1, -1, -1, -1],
-    [1, -1, -1, 1, -1, -1, -1, -1],
-    [1,  1,  1, 1,  1,  1, -1, -1],
-    [-1, -1, -1, 1, -1, -1, -1, -1],
-    [-1, -1, -1, 1, -1, -1, -1, -1],
-    [-1, -1, -1, 1, -1, -1, -1, -1],
-    [-1, -1, -1, -1, -1, -1, -1, -1],
-]
-num5 = [
-    [1, 1, 1, 1, 1, 1, 1, 1],
-    [1, -1, -1, -1, -1, -1, -1, -1],
-    [1, -1, -1, -1, -1, -1, -1, -1],
-    [1, 1, 1, 1, 1, 1, 1, 1],
-    [-1, -1, -1, -1, -1, -1, -1, 1],
-    [-1, -1, -1, -1, -1, -1, -1, 1],
-    [1, -1, -1, -1, -1, -1, -1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1],
-]
+num1 =  leer_matriz("Dataset/num1.txt")
+num2 =  leer_matriz("Dataset/num2.txt")
+num3 =  leer_matriz("Dataset/num3.txt")
+num4 =  leer_matriz("Dataset/num4.txt")
+num5 =  leer_matriz("Dataset/num5.txt")
 
 patrones = [num1, num2, num3, num4, num5]
 patrones_flat = [[item for fila in p for item in fila] for p in patrones]
@@ -142,16 +118,7 @@ def hopfield_recall(W, patron_inicial, max_iter=300, filas=8, columnas=8, patron
     return mejor_estado
 
 # ========= Patrón de prueba =========
-entrada_prueba = [
-    [-1, 1, 1, -1, 1, -1, -1, -1],
-    [1, -1, 1, -1, -1, -1, -1, -1],
-    [1, -1, 1, -1, -1, -1, -1, -1],
-    [1, 1, 1, -1, -1, 1, 1, 1],
-    [-1, -1, -1, -1, -1, -1, -1, 1],
-    [-1, -1, -1, -1, -1, -1, -1, 1],
-    [1, -1, -1, -1, -1, -1, -1, 1],
-    [1, -1, -1, -1, -1, -1, -1, -1],
-]
+entrada_prueba = leer_matriz("Dataset/valor_entrada.txt")
 entrada_flat = [item for fila in entrada_prueba for item in fila]
 
 # ========= Ejecutar =========
